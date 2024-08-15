@@ -1,6 +1,7 @@
 package cn.enilu.flash;
 
 //import cn.enilu.flash.code.Generator;
+import cn.enilu.flash.code.Generator;
 import cn.enilu.flash.utils.Lists;
 
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.List;
 public class CodeGenerator {
     public static void main(String[] args) throws Exception {
         //要生成的代码的java 实体的完整路径
-        String className = "cn.enilu.flash.bean.entity.test.Girl";
+//        String className = "cn.enilu.flash.bean.entity.test.Girl";
+        String className = "cn.enilu.flash.bean.entity.github.Github";
         generator(className);
    }
 
@@ -51,7 +53,7 @@ public class CodeGenerator {
         param.add("view");
         param.add("repository");
         String[] args = param.toArray(new String[param.size()]);
-//        Generator.main(args);
+        Generator.main(args);
 
 
     }

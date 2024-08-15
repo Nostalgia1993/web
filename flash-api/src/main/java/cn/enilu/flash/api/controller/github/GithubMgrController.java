@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/github")
 public class GithubMgrController extends BaseController {
 
+
+
     @Autowired
     private GithubService githubService;
 
@@ -48,6 +50,10 @@ public class GithubMgrController extends BaseController {
     @BussinessLog(value = "删除文章", key = "id")
     @RequiresPermissions(value = {Permission.ARTICLE_DEL})
     public Object remove(Long id) {
+
+        Article article = new Article();
+
+
         articleService.delete(id);
         return Rets.success();
     }
