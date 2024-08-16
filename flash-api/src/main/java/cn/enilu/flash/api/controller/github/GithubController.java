@@ -14,6 +14,7 @@ import cn.enilu.flash.bean.exception.ApplicationException;
 import cn.enilu.flash.bean.vo.front.Ret;
 import cn.enilu.flash.bean.vo.front.Rets;
 
+import cn.enilu.flash.service.test.EmailService;
 import cn.enilu.flash.utils.DateUtil;
 import cn.enilu.flash.utils.factory.Page;
 
@@ -37,8 +38,8 @@ public class GithubController extends BaseController {
 	private  Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private GithubService githubService;
-//	@Autowired
-//	private EmailService emailService;
+	@Autowired
+	private EmailService emailService;
 
 	@GetMapping(value = "/list")
 	@RequiresPermissions(value = {Permission.GITHUB_LIST})
