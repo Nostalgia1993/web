@@ -58,6 +58,9 @@ public interface Permission {
     String CONTACTS = "contacts";
     String FILE = "file";
     String FILE_UPLOAD = "fileUpload";
+    //github注册
+    String GITHUB_LIST = "GITHUB_LIST";
+    String GITHUB_SAVE = "GITHUB_SAVE";
 
 
 }

@@ -1,5 +1,6 @@
 package cn.enilu.flash.bean.vo.front;
 
+import cn.enilu.flash.bean.exception.ServiceExceptionEnum;
 import cn.enilu.flash.utils.Maps;
 
 public class Rets {
@@ -23,4 +24,9 @@ public class Rets {
     public static Ret expire() {
         return new Ret(Rets.TOKEN_EXPIRE, "token 过期", null);
     }
+
+    public static Ret failure(ServiceExceptionEnum serviceExceptionEnum) {
+        return new Ret(serviceExceptionEnum.getCode(), serviceExceptionEnum.getMessage(), null);
+    }
+
 }

@@ -22,7 +22,7 @@ export default {
         page: 1,
         limit: 20,
         email: undefined,
-        accountName: undefined,
+        githubName: undefined,
         startDate: undefined,
         endDate: undefined
       },

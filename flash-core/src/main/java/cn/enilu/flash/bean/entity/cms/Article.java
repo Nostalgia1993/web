@@ -17,8 +17,8 @@ import javax.validation.constraints.NotNull;
 @EntityListeners(AuditingEntityListener.class)
 public class Article extends BaseEntity {
     @Column(columnDefinition = "BIGINT COMMENT '栏目id'")
-    @NotNull(message = "邮箱不能为空")
-    private String emailAddress;
+    @NotNull(message = "栏目不能为空")
+    private Long idChannel;
     @Column(columnDefinition = "VARCHAR(128) COMMENT '标题'")
     @NotBlank(message = "标题不能为空")
     private String title;
