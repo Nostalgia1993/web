@@ -100,5 +100,5 @@
 
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "../../../styles/common";
+  @import "../../styles/common";
 </style>
