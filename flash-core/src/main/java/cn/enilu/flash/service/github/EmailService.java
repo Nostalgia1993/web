@@ -1,4 +1,4 @@
-package cn.enilu.flash.service.test;
+package cn.enilu.flash.service.github;
 
 
 import cn.enilu.flash.bean.entity.test.Email;

@@ -3,6 +3,7 @@ package cn.enilu.flash.api.controller.github;
 import cn.enilu.flash.api.controller.BaseController;
 import cn.enilu.flash.bean.entity.cms.Article;
 import cn.enilu.flash.bean.entity.github.Github;
+import cn.enilu.flash.bean.entity.test.RsaInfo;
 import cn.enilu.flash.bean.enumeration.Permission;
 import cn.enilu.flash.bean.vo.query.SearchFilter;
 import cn.enilu.flash.service.github.GithubService;
@@ -14,7 +15,8 @@ import cn.enilu.flash.bean.exception.ApplicationException;
 import cn.enilu.flash.bean.vo.front.Ret;
 import cn.enilu.flash.bean.vo.front.Rets;
 
-import cn.enilu.flash.service.test.EmailService;
+import cn.enilu.flash.service.github.EmailService;
+import cn.enilu.flash.service.github.RsaInfoService;
 import cn.enilu.flash.utils.DateUtil;
 import cn.enilu.flash.utils.factory.Page;
 
@@ -25,10 +27,10 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 
@@ -36,10 +38,11 @@ import java.util.Date;
 @RequestMapping("/github")
 public class GithubController extends BaseController {
 	private  Logger logger = LoggerFactory.getLogger(getClass());
-	@Autowired
+	@Resource
 	private GithubService githubService;
-	@Autowired
-	private EmailService emailService;
+	@Resource
+	private RsaInfoService rsaInfoService;
+
 
 	@GetMapping(value = "/list")
 	@RequiresPermissions(value = {Permission.GITHUB_LIST})
@@ -78,58 +81,43 @@ public class GithubController extends BaseController {
 			old.setGithubName(newGithub.getGithubName());
 			old.setRepositoryName(newGithub.getRepositoryName());
 			old.setSshUrl(newGithub.getSshUrl());
-			old.setUserAccount(newGithub.getUserAccount());
-//			old.setRsaId(newGithub.getRsaId());
-			old.setIdRsaPublic(newGithub.getIdRsaPublic());
+
+			// TODO: 2024/8/16 先设置为id
+			old.setUserAccount(this.getIdUserString());
+
+			RsaInfo rsaInfo = rsaInfoService.queryByAddress(newGithub.getEmailAddress());
+			old.setIdRsaPublic(rsaInfo.getIdRsaPublic());
+			old.setRsaId(rsaInfo.getId());
 			old.setTimeSubmit(new Date());
 			old.setTimeValidate(null);
-			SecurityUtils.getSubject().getPrincipal();
-			old.setModifyBy("" + getLoginUser().getId());
+
+			old.setModifyBy(this.getIdUser());
+
 			githubService.update(old);
 		} else {
+			RsaInfo rsaInfo = rsaInfoService.queryByAddress(newGithub.getEmailAddress());
+			if (rsaInfo == null) {
+				return Rets.failure(BizExceptionEnum.REQUEST_RSA_NOT_EXISTS);
+			}
+			newGithub.setIdRsaPublic(rsaInfo.getIdRsaPublic());
+			newGithub.setRsaId(rsaInfo.getId());
 			githubService.insert(newGithub);
 		}
 		return Rets.success();
 	}
 
-	@DeleteMapping
-	@BussinessLog(value = "删除文章", key = "id")
-	@RequiresPermissions(value = {Permission.ARTICLE_DEL})
-	public Object remove(Long id) {
-		articleService.delete(id);
-		return Rets.success();
-	}
+	@GetMapping(value = "/generalRsa")
+    @RequiresPermissions(value = {Permission.RSA_GENERAL})
+    public Object generalRsa(@Param("emailAddress") String emailAddress) {
+		String publicKey = rsaInfoService.generalRas(emailAddress);
+        return Rets.success(publicKey);
+    }
 
-	@GetMapping
-	@RequiresPermissions(value = {Permission.ARTICLE})
+	@GetMapping(value = "/get")
+	@RequiresPermissions(value = {Permission.GITHUB_LIST})
 	public Object get(@Param("id") Long id) {
-		Article article = articleService.get(id);
-		return Rets.success(article);
+		Github github = githubService.get(id);
+		return Rets.success(github);
 	}
 
-
-	@PostMapping
-	@BussinessLog(value = "新增github注册", key = "name")
-	@RequiresPermissions(value = "githubAdd")
-	public Ret add(@RequestBody Github github){
-		githubService.insert(github);
-		return Rets.success();
-	}
-	@PutMapping
-	@BussinessLog(value = "更新github注册", key = "name")
-	@RequiresPermissions(value = "githubUpdate")
-	public Ret update(@RequestBody Github github){
-		githubService.update(github);
-		return Rets.success();
-	}
-	@DeleteMapping
-	@BussinessLog(value = "删除github注册", key = "id")
-	@RequiresPermissions(value = "githubDelete")
-	public Ret remove(Long id){
-		if (id == null) {
-			throw new ApplicationException(BizExceptionEnum.REQUEST_NULL);
-		}
-		githubService.delete(id);
-		return Rets.success();
-	}
 }

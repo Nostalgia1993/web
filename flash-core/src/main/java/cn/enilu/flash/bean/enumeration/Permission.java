@@ -61,6 +61,7 @@ public interface Permission {
     //github注册
     String GITHUB_LIST = "GITHUB_LIST";
     String GITHUB_SAVE = "GITHUB_SAVE";
+    String RSA_GENERAL = "RSA_GENERAL";
 
 
 }

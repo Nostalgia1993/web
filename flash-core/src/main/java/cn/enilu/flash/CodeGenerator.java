@@ -18,7 +18,7 @@ public class CodeGenerator {
     public static void main(String[] args) throws Exception {
         //要生成的代码的java 实体的完整路径
 //        String className = "cn.enilu.flash.bean.entity.test.Girl";
-        String className = "cn.enilu.flash.bean.entity.test.Email";
+        String className = "cn.enilu.flash.bean.entity.test.RsaInfo";
         generator(className);
    }
 

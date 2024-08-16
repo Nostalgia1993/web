@@ -1,8 +1,8 @@
 package cn.enilu.flash.api.controller.test;
 
 import cn.enilu.flash.api.controller.BaseController;
-import cn.enilu.flash.bean.entity.test.Email;
-import cn.enilu.flash.service.github.EmailService;
+import cn.enilu.flash.bean.entity.test.RsaInfo;
+import cn.enilu.flash.service.github.RsaInfoService;
 
 import cn.enilu.flash.bean.core.BussinessLog;
 import cn.enilu.flash.bean.constant.factory.PageFactory;
@@ -24,42 +24,42 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/email")
-public class EmailController extends BaseController {
+@RequestMapping("/rsa/info")
+public class RsaInfoController extends BaseController {
 	private  Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
-	private EmailService emailService;
+	private RsaInfoService rsaInfoService;
 
 	@GetMapping(value = "/list")
-	@RequiresPermissions(value = "email")
+	@RequiresPermissions(value = "rsaInfo")
 	public Ret list(@RequestParam(required = false) Long id) {
-		Page<Email> page = new PageFactory<Email>().defaultPage();
+		Page<RsaInfo> page = new PageFactory<RsaInfo>().defaultPage();
 		page.addFilter("id",id);
-		page = emailService.queryPage(page);
+		page = rsaInfoService.queryPage(page);
 		return Rets.success(page);
 	}
 	@PostMapping
-	@BussinessLog(value = "新增邮箱", key = "name")
-	@RequiresPermissions(value = "emailAdd")
-	public Ret add(@RequestBody Email email){
-		emailService.insert(email);
+	@BussinessLog(value = "新增rsa信息", key = "name")
+	@RequiresPermissions(value = "rsaInfoAdd")
+	public Ret add(@RequestBody RsaInfo rsaInfo){
+		rsaInfoService.insert(rsaInfo);
 		return Rets.success();
 	}
 	@PutMapping
-	@BussinessLog(value = "更新邮箱", key = "name")
-	@RequiresPermissions(value = "emailUpdate")
-	public Ret update(@RequestBody Email email){
-		emailService.update(email);
+	@BussinessLog(value = "更新rsa信息", key = "name")
+	@RequiresPermissions(value = "rsaInfoUpdate")
+	public Ret update(@RequestBody RsaInfo rsaInfo){
+		rsaInfoService.update(rsaInfo);
 		return Rets.success();
 	}
 	@DeleteMapping
-	@BussinessLog(value = "删除邮箱", key = "id")
-	@RequiresPermissions(value = "emailDelete")
+	@BussinessLog(value = "删除rsa信息", key = "id")
+	@RequiresPermissions(value = "rsaInfoDelete")
 	public Ret remove(Long id){
 		if (id == null) {
 			throw new ApplicationException(BizExceptionEnum.REQUEST_NULL);
 		}
-		emailService.delete(id);
+		rsaInfoService.delete(id);
 		return Rets.success();
 	}
 }
