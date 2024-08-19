@@ -1,15 +1,10 @@
-import editorImage from '@/components/Tinymce'
 import { Loading } from 'element-ui'
-import plugins from './plugins'
-import toolbar from './toolbar'
-import articleApi from '@/api/cms/article'
-import channelApi  from '@/api/cms/channel'
+import githubApi from '@/api/github/github'
 import { getApiUrl } from '@/utils/utils'
 import { getToken } from '@/utils/auth'
 
 export default {
-  name: 'editArticle',
-  components: { editorImage },
+  name: 'editGithub',
   props: {
     id: {
       type: String,
@@ -180,7 +175,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           const content = this.form.content.split('%').join('%25')
-          articleApi.save({
+          githubApi.save({
             id: this.form.id,
             title: this.form.title,
             author: this.form.author,

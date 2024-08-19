@@ -29,9 +29,9 @@
       <br>
       <el-row>
         <el-col :span="24">
-          <el-button type="success" size="mini" icon="el-icon-plus" @click.native="add" v-permission="['/github/githubEdit']">{{ $t('button.add') }}</el-button>
-          <el-button type="primary" size="mini"  icon="el-icon-edit" @click.native="edit" v-permission="['/github/githubEdit']">{{ $t('button.edit') }}</el-button>
-          <el-button type="danger" size="mini"  icon="el-icon-delete" @click.native="remove" v-permission="['/github/remove']">{{ $t('button.delete') }}</el-button>
+          <el-button type="success" size="mini" icon="el-icon-plus" @click.native="add" v-permission="['/github']">{{ $t('button.add') }}</el-button>
+          <el-button type="primary" size="mini"  icon="el-icon-edit" @click.native="edit" v-permission="['/github']">{{ $t('button.edit') }}</el-button>
+          <el-button type="danger" size="mini"  icon="el-icon-delete" @click.native="remove" v-permission="['/github']">{{ $t('button.delete') }}</el-button>
         </el-col>
       </el-row>
     </div>
@@ -74,7 +74,7 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="mini" icon="el-icon-edit" @click.native="editItem(scope.row)" v-permission="['/github']">{{ $t('button.edit') }}</el-button>
-          <el-button type="text" size="mini" icon="el-icon-delete" @click.native="removeItem(scope.row)" v-permission="['/github']">{{ $t('button.delete') }}</el-button>
+<!--          <el-button type="text" size="mini" icon="el-icon-delete" @click.native="removeItem(scope.row)" v-permission="['/github']">{{ $t('button.delete') }}</el-button>-->
         </template>
       </el-table-column>
 

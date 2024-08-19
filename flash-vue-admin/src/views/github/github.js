@@ -100,10 +100,6 @@ export default {
       }
       githubApi.getList(queryData).then(response => {
         this.list = response.data.records
-        // for (const index in this.list) {
-        //   const item = this.list[index]
-        //   item.img = getApiUrl() + '/file/getImgStream?idFile=' + item.img
-        // }
         this.listLoading = false
         this.total = response.data.total
       })
@@ -169,10 +165,10 @@ export default {
         this.$router.push({path: '/github/githubEdit', query: {id: this.selRow.id}})
       }
     },
-    removeItem(record) {
-      this.selRow = record
-      this.remove()
-    },
+    // removeItem(record) {
+    //   this.selRow = record
+    //   this.remove()
+    // },
     // remove() {
     //   if (this.checkSel()) {
     //     const id = this.selRow.id
