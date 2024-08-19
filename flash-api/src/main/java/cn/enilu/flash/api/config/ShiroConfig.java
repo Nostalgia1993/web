@@ -78,6 +78,9 @@ public class ShiroConfig {
         filterRuleMap.put("/file/getImgStream", "anon");
         filterRuleMap.put("/file/getImgBase64", "anon");
 
+//        filterRuleMap.put("/article/list", "anon");
+//        filterRuleMap.put("/github/list", "anon");
+
         filterRuleMap.put("/test/**", "anon");
         filterRuleMap.put("/workflow/request/png/**", "anon");
         //工作流定义文件流
@@ -93,9 +96,6 @@ public class ShiroConfig {
         // 访问401和404页面不通过我们的Filter
         filterRuleMap.put("/401", "anon");
         filterRuleMap.put("/**", "jwt");
-
-        filterRuleMap.put("/article/list", "anon");
-        filterRuleMap.put("/github/list", "anon");
 
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;

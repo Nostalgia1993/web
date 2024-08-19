@@ -21,7 +21,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 20,
-        email: undefined,
+        emailAddress: undefined,
         githubName: undefined,
         startDate: undefined,
         endDate: undefined

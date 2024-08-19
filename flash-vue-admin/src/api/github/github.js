@@ -3,7 +3,7 @@ export  default {
   getList: function (params) {
     return request({
       url: '/github/list',
-      method: 'post',
+      method: 'get',
       params
     })
   },

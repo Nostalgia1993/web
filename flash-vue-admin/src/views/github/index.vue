@@ -3,10 +3,10 @@
     <div class="block">
       <el-row  :gutter="20">
         <el-col :span="6">
-          <el-input v-model="listQuery.email" size="mini" placeholder="邮箱"></el-input>
+          <el-input v-model="listQuery.emailAddress" size="mini" placeholder="邮箱"></el-input>
         </el-col>
         <el-col :span="6">
-          <el-input v-model="listQuery.accountName" size="mini" placeholder="账户名称"></el-input>
+          <el-input v-model="listQuery.githubName" size="mini" placeholder="账户名称"></el-input>
         </el-col>
         <el-col :span="8">
           <el-date-picker
@@ -47,12 +47,12 @@
       </el-table-column>
       <el-table-column label="邮箱">
         <template slot-scope="scope">
-          {{scope.row.email}}
+          {{scope.row.emailAddress}}
         </template>
       </el-table-column>
       <el-table-column label="账户名称">
         <template slot-scope="scope">
-          {{scope.row.accountName}}
+          {{scope.row.githubName}}
         </template>
       </el-table-column>
       <el-table-column label="仓库名称">
@@ -62,7 +62,7 @@
       </el-table-column>
       <el-table-column label="仓库地址">
         <template slot-scope="scope">
-          {{scope.row.sshRrl}}
+          {{scope.row.sshUrl}}
         </template>
       </el-table-column>
 
@@ -73,8 +73,8 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="mini" icon="el-icon-edit" @click.native="editItem(scope.row)" v-permission="['/github/githubEdit']">{{ $t('button.edit') }}</el-button>
-          <el-button type="text" size="mini" icon="el-icon-delete" @click.native="removeItem(scope.row)" v-permission="['/github/remove']">{{ $t('button.delete') }}</el-button>
+          <el-button type="text" size="mini" icon="el-icon-edit" @click.native="editItem(scope.row)" v-permission="['/github']">{{ $t('button.edit') }}</el-button>
+          <el-button type="text" size="mini" icon="el-icon-delete" @click.native="removeItem(scope.row)" v-permission="['/github']">{{ $t('button.delete') }}</el-button>
         </template>
       </el-table-column>
 

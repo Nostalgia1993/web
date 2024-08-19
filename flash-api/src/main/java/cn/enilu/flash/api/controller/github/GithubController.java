@@ -45,15 +45,15 @@ public class GithubController extends BaseController {
 
 
 	@GetMapping(value = "/list")
-	@RequiresPermissions(value = {Permission.GITHUB_LIST})
-	public Object list(@RequestParam(required = false) String email,
-					   @RequestParam(required = false) String accountName,
+	@RequiresPermissions(value = {Permission.GITHUB})
+	public Object list(@RequestParam(required = false) String emailAddress,
+					   @RequestParam(required = false) String githubName,
 					   @RequestParam(required = false) String startDate,
 					   @RequestParam(required = false) String endDate
 	) {
 		Page<Github> page = new PageFactory<Github>().defaultPage();
-		page.addFilter("email", SearchFilter.Operator.LIKE, email);
-		page.addFilter("accountName", SearchFilter.Operator.EQ, accountName);
+		page.addFilter("emailAddress", SearchFilter.Operator.LIKE, emailAddress);
+		page.addFilter("githubName", SearchFilter.Operator.EQ, githubName);
 		page.addFilter("timeSubmit", SearchFilter.Operator.GTE, DateUtil.parse(startDate, "yyyyMMddHHmmss"));
 		page.addFilter("timeSubmit", SearchFilter.Operator.LTE, DateUtil.parse(endDate, "yyyyMMddHHmmss"));
 		page = githubService.queryPage(page);
@@ -62,7 +62,7 @@ public class GithubController extends BaseController {
 
 	@PostMapping
 	@BussinessLog(value = "编辑注册记录", key = "emailAddress")
-	@RequiresPermissions(value = {Permission.GITHUB_SAVE})
+	@RequiresPermissions(value = {Permission.GITHUB})
 	public Object save() {
 		Github newGithub = getFromJson(Github.class);
 		if (newGithub.getId() != null) {
@@ -107,14 +107,14 @@ public class GithubController extends BaseController {
 	}
 
 	@GetMapping(value = "/generalRsa")
-    @RequiresPermissions(value = {Permission.RSA_GENERAL})
+    @RequiresPermissions(value = {Permission.GITHUB})
     public Object generalRsa(@Param("emailAddress") String emailAddress) {
 		String publicKey = rsaInfoService.generalRas(emailAddress);
         return Rets.success(publicKey);
     }
 
 	@GetMapping(value = "/get")
-	@RequiresPermissions(value = {Permission.GITHUB_LIST})
+	@RequiresPermissions(value = {Permission.GITHUB})
 	public Object get(@Param("id") Long id) {
 		Github github = githubService.get(id);
 		return Rets.success(github);
