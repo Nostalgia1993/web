@@ -1,4 +1,4 @@
-import githubApi from "@/api/github/github";
+import rsaApi from "@/api/github/rsa";
 import {getApiUrl} from '@/utils/utils'
 import permission from '@/directive/permission/index.js'
 
@@ -87,7 +87,7 @@ export default {
         queryData['endDate'] = this.rangeDate[1]
 
       }
-      githubApi.getRsaList(queryData).then(response => {
+      rsaApi.getRsaList(queryData).then(response => {
         this.list = response.data.records
         this.listLoading = false
         this.total = response.data.total
@@ -105,7 +105,7 @@ export default {
       console.info('1111')
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          githubApi.generalEmail({
+          rsaApi.generalEmail({
             emailAddress: this.form.emailAddress
           }).then(response => {
             this.$message({
