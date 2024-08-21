@@ -89,11 +89,11 @@
               <el-input type="textarea" :disabled=true v-model="idRsaPublic" minlength=1></el-input>
             </el-form-item>
           </el-col>
-        <el-form-item>
-          <el-button type="primary" @click="general">{{ $t('button.submit') }}</el-button>
-          <el-button @click.native="formVisible = false">{{ $t('button.cancel') }}</el-button>
-        </el-form-item>
-
+          <el-form-item>
+            <el-button type="primary" @click="general">{{ $t('button.submit') }}</el-button>
+            <el-button @click.native="formVisible = false">{{ $t('button.cancel') }}</el-button>
+          </el-form-item>
+        </el-row>
       </el-form>
     </el-dialog>
   </div>
