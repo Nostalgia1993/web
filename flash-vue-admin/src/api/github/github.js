@@ -14,4 +14,18 @@ export  default {
       data: params
     })
   },
+  getRsaList:function (params) {
+    return request({
+      url: '/github/rsaList',
+      method: 'get',
+      params
+    })
+  },
+  generalEmail:function (params) {
+    return request({
+      url: '/github/generalEmail',
+      method: 'get',
+      params
+    })
+  },
 }

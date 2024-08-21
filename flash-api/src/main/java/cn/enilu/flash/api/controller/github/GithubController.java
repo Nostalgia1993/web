@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 
 @RestController
@@ -45,7 +46,7 @@ public class GithubController extends BaseController {
 
 
 	@GetMapping(value = "/list")
-	@RequiresPermissions(value = {Permission.GITHUB})
+//	@RequiresPermissions(value = {Permission.GITHUB})
 	public Object list(@RequestParam(required = false) String emailAddress,
 					   @RequestParam(required = false) String githubName,
 					   @RequestParam(required = false) String startDate,
@@ -60,9 +61,9 @@ public class GithubController extends BaseController {
 		return Rets.success(page);
 	}
 
-	@PostMapping
-	@BussinessLog(value = "编辑注册记录", key = "emailAddress")
-	@RequiresPermissions(value = {Permission.GITHUB})
+	@PostMapping(value = "/save")
+	@BussinessLog(value = "保存注册记录", key = "emailAddress")
+//	@RequiresPermissions(value = {Permission.GITHUB})
 	public Object save() {
 		Github newGithub = getFromJson(Github.class);
 		if (newGithub.getId() != null) {
@@ -107,11 +108,29 @@ public class GithubController extends BaseController {
 	}
 
 	@GetMapping(value = "/generalRsa")
-    @RequiresPermissions(value = {Permission.GITHUB})
+//    @RequiresPermissions(value = {Permission.GITHUB})
     public Object generalRsa(@Param("emailAddress") String emailAddress) {
 		String publicKey = rsaInfoService.generalRas(emailAddress);
         return Rets.success(publicKey);
     }
+
+	@GetMapping(value = "/rsaList")
+//	@RequiresPermissions(value = {Permission.GITHUB})
+	public Object rsaList(@RequestParam(required = false) String emailAddress,
+					   @RequestParam(required = false) String startDate,
+					   @RequestParam(required = false) String endDate
+	) {
+		Page<RsaInfo> page = new PageFactory<RsaInfo>().defaultPage();
+		page.addFilter("emailAddress", SearchFilter.Operator.LIKE, emailAddress);
+		page.addFilter("timeSubmit", SearchFilter.Operator.GTE, DateUtil.parse(startDate, "yyyyMMddHHmmss"));
+		page.addFilter("timeSubmit", SearchFilter.Operator.LTE, DateUtil.parse(endDate, "yyyyMMddHHmmss"));
+		page = rsaInfoService.queryPage(page);
+		List<RsaInfo> records = page.getRecords();
+		for (RsaInfo record : records) {
+			record.setIdRsa("");
+		}
+		return Rets.success(page);
+	}
 
 	@GetMapping(value = "/get")
 	@RequiresPermissions(value = {Permission.GITHUB})

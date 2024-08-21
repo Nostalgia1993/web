@@ -49,8 +49,7 @@ public class Github extends BaseEntity {
     @NotNull(message = "创建时间不能为空")
     private Date timeSubmit;
 
-    @Column(columnDefinition = "timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '验证时间'")
-    @NotBlank(message = "验证时间不能为空")
+    @Column(columnDefinition = "timestamp DEFAULT NULL COMMENT '验证时间'")
     private Date timeValidate;
 
 

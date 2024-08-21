@@ -59,7 +59,19 @@ div:focus {
   }
 }
 
+$dark_gray: #889aa4;
+
 // main-container global css
 .app-container {
   padding: 20px;
+
+  .show-pwd {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-size: 16px;
+    color: $dark_gray;
+    cursor: pointer;
+    user-select: none;
+  }
 }
