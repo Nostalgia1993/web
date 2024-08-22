@@ -5,9 +5,6 @@
         <el-col :span="6">
           <el-input v-model="listQuery.emailAddress" size="mini" placeholder="邮箱"></el-input>
         </el-col>
-        <el-col :span="6">
-          <el-input v-model="listQuery.githubName" size="mini" placeholder="账户名称"></el-input>
-        </el-col>
         <el-col :span="8">
           <el-date-picker
             v-model="rangeDate"
@@ -29,7 +26,7 @@
       <br>
       <el-row>
         <el-col :span="24">
-          <el-button type="success" size="mini" icon="el-icon-plus" @click.native="generalVue" v-permission="['/github']">生成公钥</el-button>
+          <el-button type="success" size="mini" icon="el-icon-plus" @click.native="generalVue">生成公钥</el-button>
         </el-col>
       </el-row>
     </div>
@@ -55,7 +52,7 @@
       </el-table-column>
       <el-table-column label="生成时间">
         <template slot-scope="scope">
-          {{scope.row.dateCreated}}
+          {{scope.row.generalTime}}
         </template>
       </el-table-column>
     </el-table>
@@ -77,22 +74,33 @@
       :title="formTitle"
       :visible.sync="formVisible"
       width="70%">
-      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+      <el-form ref="form" :model="rsaForm" label-width="120px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="邮箱"  >
-              <el-input v-model="form.emailAddress" minlength=1></el-input>
+              <el-input v-model="generalEmail" minlength=1></el-input>
+
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item  label="公钥"  >
               <el-input type="textarea" :disabled=true v-model="idRsaPublic" minlength=1></el-input>
+<!--              <el-input v-model="idRsaPublic" minlength=1></el-input>-->
             </el-form-item>
           </el-col>
-          <el-form-item>
-            <el-button type="primary" @click="general">{{ $t('button.submit') }}</el-button>
-            <el-button @click.native="formVisible = false">{{ $t('button.cancel') }}</el-button>
-          </el-form-item>
+          <el-col :span="12">
+            <el-form-item>
+              <el-button type="primary" @click="general">{{ $t('button.submit') }}</el-button>
+              <el-button @click.native="formVisible = false">{{ $t('button.cancel') }}</el-button>
+            </el-form-item>
+
+          </el-col>
+<!--          <el-form-item>-->
+<!--            <el-button type="primary" @click="general">{{ $t('button.submit') }}</el-button>-->
+<!--                <el-button type="primary" @click="general">{{ $t('button.submit') }}</el-button>-->
+<!--            <el-button @click.native="formVisible = false">{{ $t('button.cancel') }}</el-button>-->
+<!--          </el-form-item>-->
+
         </el-row>
       </el-form>
     </el-dialog>

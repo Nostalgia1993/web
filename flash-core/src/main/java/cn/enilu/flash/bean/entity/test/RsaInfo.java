@@ -37,4 +37,8 @@ public class RsaInfo extends BaseEntity {
     @NotBlank(message = "私钥不能为空")
     private String status;
 
+    @Column(columnDefinition = "timestamp NOT NULL COMMENT '生成时间'")
+    @NotNull(message = "生成时间不能为空")
+    private Date generalTime;
+
 }

@@ -9,15 +9,7 @@ export default {
     return {
       formVisible: false,
       formTitle: '生成公钥',
-      form: {
-        id: '',
-        emailAddress: '',
-        userRsaName: '',
-        idRsaPublic: '',
-        status: '',
-        date_created: undefined
-      },
-
+      rsaForm:{},
       listQuery: {
         page: 1,
         limit: 20,
@@ -27,6 +19,7 @@ export default {
       },
       //生成后回显的值
       idRsaPublic:'',
+      generalEmail:'',
       rangeDate: undefined,
       total: 0,
       list: null,
@@ -98,27 +91,49 @@ export default {
       this.fetchData()
     },
     generalVue() {
-      this.idRsaPublic = '',
+      // this.idRsaPublic = '',
       this.formVisible = true
     },
     general() {
       console.info('1111')
-      this.$refs['form'].validate((valid) => {
-        if (valid) {
-          rsaApi.generalEmail({
-            emailAddress: this.form.emailAddress
-          }).then(response => {
-            this.$message({
-              message: this.$t('common.optionSuccess'),
-              type: 'success'
-            })
-            this.idRsaPublic = response.data
-            this.back()
+      if (this.validateEmail(this.generalEmail)) {
+        rsaApi.generalEmail({
+          emailAddress: this.generalEmail
+        }).then(response => {
+          this.$message({
+            message: this.$t('common.optionSuccess'),
+            type: 'success'
           })
-        } else {
-          return false
-        }
-      })
+          this.idRsaPublic = response.data
+          // this.back()
+        })
+      } else {
+        this.$message({
+          message: this.$t('请输入正确的邮箱地址'),
+          type: 'success'
+        })
+        return false
+      }
+      // this.$refs['form'].validate((valid) => {
+      //   if (valid) {
+      //     rsaApi.generalEmail({
+      //       emailAddress: this.generalEmail
+      //     }).then(response => {
+      //       this.$message({
+      //         message: this.$t('common.optionSuccess'),
+      //         type: 'success'
+      //       })
+      //       this.idRsaPublic = response.data
+      //       // this.back()
+      //     })
+      //   } else {
+      //     return false
+      //   }
+      // })
+    },
+    validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
     },
     reset() {
       this.listQuery.email = undefined
@@ -153,6 +168,9 @@ export default {
     },
     handleCurrentChange(currentRow, oldCurrentRow) {
       this.selRow = currentRow
+    },
+    back() {
+      this.$router.go(-1)
     },
   }
 }

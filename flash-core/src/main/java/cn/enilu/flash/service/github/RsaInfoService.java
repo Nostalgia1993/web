@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Date;
 
 @Service
 public class RsaInfoService extends BaseService<RsaInfo,Long,RsaInfoRepository>  {
@@ -72,6 +73,7 @@ public class RsaInfoService extends BaseService<RsaInfo,Long,RsaInfoRepository> 
             rsaInfo.setIdRsaPublic(publicKey);
             rsaInfo.setIdRsa(privateKey);
             rsaInfo.setStatus("0");
+            rsaInfo.setGeneralTime(new Date());
             insert(rsaInfo);
             System.out.println(publicKey);
             return publicKey;
