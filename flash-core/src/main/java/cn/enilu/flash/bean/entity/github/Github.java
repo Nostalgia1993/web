@@ -25,6 +25,10 @@ public class Github extends BaseEntity {
     @NotBlank(message = "用户名不能为空")
     private String githubName;
 
+    @Column(columnDefinition = "varchar(32) NOT NULL DEFAULT '' COMMENT '密码'")
+    @NotBlank(message = "密码不能为空")
+    private String password;
+
     @Column(columnDefinition = "varchar(32) NOT NULL DEFAULT '' COMMENT '仓库名称'")
     @NotBlank(message = "仓库名称不能为空")
     private String repositoryName;

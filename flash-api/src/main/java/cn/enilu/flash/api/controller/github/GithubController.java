@@ -82,18 +82,22 @@ public class GithubController extends BaseController {
 			old.setGithubName(newGithub.getGithubName());
 			old.setRepositoryName(newGithub.getRepositoryName());
 			old.setSshUrl(newGithub.getSshUrl());
+			old.setPassword(newGithub.getPassword());
 
 			// TODO: 2024/8/16 先设置为id
 			old.setUserAccount(this.getIdUserString());
 
 			RsaInfo rsaInfo = rsaInfoService.queryByAddress(newGithub.getEmailAddress());
+			if (rsaInfo == null) {
+				return Rets.failure(BizExceptionEnum.REQUEST_EMAIL_EXISTS);
+			}
+
 			old.setIdRsaPublic(rsaInfo.getIdRsaPublic());
 			old.setRsaId(rsaInfo.getId());
 			old.setTimeSubmit(new Date());
 			old.setTimeValidate(null);
 
 			old.setModifyBy(this.getIdUser());
-
 			githubService.update(old);
 		} else {
 			RsaInfo rsaInfo = rsaInfoService.queryByAddress(newGithub.getEmailAddress());
@@ -102,7 +106,17 @@ public class GithubController extends BaseController {
 			}
 			newGithub.setIdRsaPublic(rsaInfo.getIdRsaPublic());
 			newGithub.setRsaId(rsaInfo.getId());
+
+			// TODO: 2024/8/16 先设置为id
+			newGithub.setUserAccount(this.getIdUserString());
+			newGithub.setTimeSubmit(new Date());
+			newGithub.setCreateTime(new Date());
+			newGithub.setCreateBy(this.getIdUser());
+			newGithub.setModifyBy(this.getIdUser());
 			githubService.insert(newGithub);
+			//设置rsa为已关联
+			rsaInfo.setStatus("1");
+			rsaInfoService.update(rsaInfo);
 		}
 		return Rets.success();
 	}

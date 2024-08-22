@@ -17,7 +17,7 @@ export default {
         githubName: '',
         repositoryName: '',
         sshUrl: '',
-        password: undefined,
+        password: '',
         timeSubmit:undefined
       },
 
@@ -116,20 +116,29 @@ export default {
       console.info('1111')
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          // const content = this.form.content.split('%').join('%25')
-          githubApi.save({
-            id: this.form.id,
-            emailAddress: this.form.emailAddress,
-            githubName: this.form.githubName,
-            repositoryName: this.form.repositoryName,
-            sshUrl: this.form.sshUrl
-          }).then(response => {
+          if (this.validateEmail(this.form.emailAddress)) {
+            // const content = this.form.content.split('%').join('%25')
+            githubApi.save({
+              id: this.form.id,
+              emailAddress: this.form.emailAddress,
+              githubName: this.form.githubName,
+              repositoryName: this.form.repositoryName,
+              sshUrl: this.form.sshUrl,
+              password: this.form.password
+            }).then(response => {
+              this.$message({
+                message: this.$t(response.msg),
+                type: 'success'
+              })
+              this.formVisible = false;
+            })
+          } else {
             this.$message({
-              message: this.$t('common.optionSuccess'),
+              message: this.$t('请输入正确的邮箱地址'),
               type: 'success'
             })
-            this.back()
-          })
+            return false
+          }
         } else {
           return false
         }
@@ -158,6 +167,14 @@ export default {
     handleClose() {
 
     },
+    validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    },
+    back() {
+      this.$router.go(-1)
+    },
+
     fetchNext() {
       this.listQuery.page = this.listQuery.page + 1
       this.fetchData()
@@ -181,6 +198,7 @@ export default {
       this.formTitle = '新增注册记录'
       this.isAdd = true
       this.selRow = {}
+      this.form = {}
       this.formVisible = true
     },
     checkSel() {
