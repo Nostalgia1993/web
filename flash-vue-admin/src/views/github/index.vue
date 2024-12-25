@@ -31,9 +31,6 @@
         <el-col :span="24">
           <el-button type="success" size="mini" icon="el-icon-plus" @click.native="add" v-permission="['/github']">{{ $t('button.add') }}</el-button>
           <el-button type="primary" size="mini"  icon="el-icon-edit" @click.native="edit" v-permission="['/github']">{{ $t('button.edit') }}</el-button>
-
-<!--          <el-button type="success" size="mini" icon="el-icon-plus" @click.native="add" >新增</el-button>-->
-<!--          <el-button type="primary" size="mini"  icon="el-icon-edit" @click.native="edit" >修改</el-button>-->
         </el-col>
       </el-row>
     </div>

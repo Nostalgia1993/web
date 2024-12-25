@@ -26,4 +26,9 @@ public class GithubServiceTest extends BaseApplicationStartTest {
         System.out.println(githubPage.getRecords().get(0));
     }
 
+    @Test
+    public void submit() {
+        githubService.submitCode();
+    }
+
 }

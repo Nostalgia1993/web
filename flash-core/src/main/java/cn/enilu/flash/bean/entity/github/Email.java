@@ -1,4 +1,4 @@
-package cn.enilu.flash.bean.entity.test;//package cn.enilu.flash.bean.entity.test;
+package cn.enilu.flash.bean.entity.github;//package cn.enilu.flash.bean.entity.test;
 
 import cn.enilu.flash.bean.entity.BaseEntity;
 import lombok.Data;

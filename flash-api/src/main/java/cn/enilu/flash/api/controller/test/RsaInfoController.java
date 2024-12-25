@@ -1,7 +1,7 @@
 package cn.enilu.flash.api.controller.test;
 
 import cn.enilu.flash.api.controller.BaseController;
-import cn.enilu.flash.bean.entity.test.RsaInfo;
+import cn.enilu.flash.bean.entity.github.RsaInfo;
 import cn.enilu.flash.service.github.RsaInfoService;
 
 import cn.enilu.flash.bean.core.BussinessLog;

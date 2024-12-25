@@ -1,7 +1,7 @@
 package cn.enilu.flash.service.github;
 
 
-import cn.enilu.flash.bean.entity.test.Email;
+import cn.enilu.flash.bean.entity.github.Email;
 import cn.enilu.flash.dao.test.EmailRepository;
 
 import cn.enilu.flash.service.BaseService;

@@ -1,7 +1,7 @@
 package cn.enilu.flash.api.controller.test;
 
 import cn.enilu.flash.api.controller.BaseController;
-import cn.enilu.flash.bean.entity.test.Email;
+import cn.enilu.flash.bean.entity.github.Email;
 import cn.enilu.flash.service.github.EmailService;
 
 import cn.enilu.flash.bean.core.BussinessLog;

@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 public class SSHKeyGeneratorUtils {
 
     public static void main(String[] args) {
-        String email = "test22Rsa@gmail.com";
+        String email = "liunian0714@163.com";
         String userName = email.substring(0, email.indexOf("@"));
 
         try {
@@ -36,7 +36,6 @@ public class SSHKeyGeneratorUtils {
         ProcessBuilder pb = new ProcessBuilder(command);
         pb.redirectErrorStream(true);
 
-        // Start the process
         Process process = pb.start();
 
         // Read the output

@@ -1,32 +1,21 @@
 package cn.enilu.flash.api.controller.github;
 
 import cn.enilu.flash.api.controller.BaseController;
-import cn.enilu.flash.bean.entity.cms.Article;
+import cn.enilu.flash.bean.constant.factory.PageFactory;
+import cn.enilu.flash.bean.core.BussinessLog;
 import cn.enilu.flash.bean.entity.github.Github;
-import cn.enilu.flash.bean.entity.test.RsaInfo;
+import cn.enilu.flash.bean.entity.github.RsaInfo;
+import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
 import cn.enilu.flash.bean.enumeration.Permission;
+import cn.enilu.flash.bean.vo.front.Rets;
 import cn.enilu.flash.bean.vo.query.SearchFilter;
 import cn.enilu.flash.service.github.GithubService;
-
-import cn.enilu.flash.bean.core.BussinessLog;
-import cn.enilu.flash.bean.constant.factory.PageFactory;
-import cn.enilu.flash.bean.enumeration.BizExceptionEnum;
-import cn.enilu.flash.bean.exception.ApplicationException;
-import cn.enilu.flash.bean.vo.front.Ret;
-import cn.enilu.flash.bean.vo.front.Rets;
-
-import cn.enilu.flash.service.github.EmailService;
 import cn.enilu.flash.service.github.RsaInfoService;
 import cn.enilu.flash.utils.DateUtil;
 import cn.enilu.flash.utils.factory.Page;
-
-
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +35,6 @@ public class GithubController extends BaseController {
 
 
 	@GetMapping(value = "/list")
-//	@RequiresPermissions(value = {Permission.GITHUB})
 	public Object list(@RequestParam(required = false) String emailAddress,
 					   @RequestParam(required = false) String githubName,
 					   @RequestParam(required = false) String startDate,
@@ -63,7 +51,6 @@ public class GithubController extends BaseController {
 
 	@PostMapping(value = "/save")
 	@BussinessLog(value = "保存注册记录", key = "emailAddress")
-//	@RequiresPermissions(value = {Permission.GITHUB})
 	public Object save() {
 		Github newGithub = getFromJson(Github.class);
 		if (newGithub.getId() != null) {

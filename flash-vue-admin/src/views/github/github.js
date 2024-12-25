@@ -131,6 +131,7 @@ export default {
                 type: 'success'
               })
               this.formVisible = false;
+              this.search();
             })
           } else {
             this.$message({
@@ -222,7 +223,7 @@ export default {
         this.isAdd = false
         this.form = this.selRow
         this.formVisible = true
-        // this.$router.push({path: '/github/githubEdit', query: {id: this.selRow.id}})
+        this.search()
       }
     }
 

@@ -1,7 +1,7 @@
 package cn.enilu.flash.dao.test;
 
 
-import cn.enilu.flash.bean.entity.test.Email;
+import cn.enilu.flash.bean.entity.github.Email;
 import cn.enilu.flash.dao.BaseRepository;
 
 
