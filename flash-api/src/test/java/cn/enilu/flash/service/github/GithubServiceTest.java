@@ -28,7 +28,7 @@ public class GithubServiceTest extends BaseApplicationStartTest {
 
     @Test
     public void submit() {
-        githubService.submitCode();
+        githubService.readAccountAndCommit();
     }
 
 }

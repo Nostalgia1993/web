@@ -34,13 +34,19 @@ public class GithubService extends BaseService<Github,Long,GithubRepository>  {
     @Resource
     private EmailService emailService;
 
-    public void submitCode() {
-        try {
-            Page<Github> page = new PageFactory<Github>().defaultPage();
-            page.addFilter("emailAddress", SearchFilter.Operator.LIKE, "liunian0714@163.com");
-            Page<Github> githubPage = this.queryPage(page);
-            System.out.println(githubPage.getRecords().get(0));
+    public void readAccountAndCommit() {
+        Page<Github> page = new PageFactory<Github>().defaultPage();
+        page.addFilter("emailAddress", SearchFilter.Operator.LIKE, "liunian0714@163.com");
+        Page<Github> githubPage = this.queryPage(page);
+        System.out.println(githubPage.getRecords().get(0));
 
+        for (Github record : githubPage.getRecords()) {
+            submitCode(record);
+        }
+    }
+
+    public void submitCode(Github record) {
+        try {
 
             String filePath = "C:\\Users\\liunian-jk\\Desktop\\doc\\github\\web\\";
             String fileName = filePath + "README2.md";
@@ -49,10 +55,10 @@ public class GithubService extends BaseService<Github,Long,GithubRepository>  {
             updateReadMe(fileName);
 
             //切换用户
-            switchUser();
+            switchUser(record);
 
             //添加代码到暂存区
-            String addCommand = String.format("git add %s", filePath);
+            String addCommand = String.format("git add %s", fileName);
             List<String> addResult = execCommand(addCommand);
             System.out.println(addResult);
 
@@ -61,12 +67,19 @@ public class GithubService extends BaseService<Github,Long,GithubRepository>  {
 
             String commitCommand = getCommitCommand(filePath);
             //切换用户
-            switchUser();
+            switchUser(record);
             List<String> commitResult = execCommand(commitCommand);
             System.out.println(commitResult);
 
             //push代码
-            execCommand("git push origin master");
+            String emailAddress = record.getEmailAddress();
+            String pushCode;
+            if (emailAddress.equals("liunian0714@163.com")) {
+                pushCode = "git push origin master";
+            } else {
+                pushCode = "git push " + emailAddress.substring(0, emailAddress.indexOf("@")) + "master";
+            }
+            execCommand(pushCode);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -74,68 +87,15 @@ public class GithubService extends BaseService<Github,Long,GithubRepository>  {
 
     }
 
-    public void switchUser() {
-        String command1 = "git config user.name Nostalgia1993";
+    public void switchUser(Github record) {
+        String command1 = "git config user.name " + record.getGithubName();
         List<String> result1 = execCommand(command1);
         System.out.println(result1);
 
-        String command2 = "git config user.name liunian0714@163.com";
+        String command2 = "git config user.name " + record.getEmailAddress();
         List<String> result2 = execCommand(command2);
         System.out.println(result2);
     }
-
-//    @Test
-//    public void submitOtherDirCode() throws Exception {
-//        String filePath = "C:\\Users\\liunian-jk\\Desktop\\doc\\github\\test\\src\\main\\java\\com\\github\\";
-//        String fileName = filePath + "readme.md";
-//
-//        //修改代码:向readme文件写入一行代码
-//        updateReadMe(fileName);
-//
-//        //添加代码到暂存区
-//        String addCommand = String.format("git add %s", filePath);
-//        List<String> addResult = execCommand(addCommand);
-//        System.out.println(addResult);
-//
-//        //提交代码
-//        //获取需要提交的代码命令
-//        String commitCommand = getCommitCommand(filePath);
-//        List<String> commitResult = execCommand(commitCommand);
-//        System.out.println(commitResult);
-//
-//        //push代码
-//        String pushCommand = "git push origin main";
-//        List<String> pushResult = execCommand(pushCommand);
-//        System.out.println(pushResult);
-//
-//
-//    }
-
-
-
-
-
-
-//    @Test
-//    public void switchDirAndSubmit() throws Exception{
-//        String fileDirPath = "C:\\Users\\liunian-jk\\Desktop\\doc\\github2\\Test\\src\\main\\java\\com\\github\\";
-//        String updateFileName = fileDirPath + "readme.md";
-//        updateReadMe(updateFileName);
-//
-//        //切换目录
-////        String switchPwd = "cmd /k cd C:\\Users\\liunian-jk\\Desktop\\doc\\github2\\Test\\src\\main\\java\\com\\github\\ && cmd /c dir ";
-//        String switchPwd = "cmd /k cd C:\\Users\\liunian-jk\\Desktop\\doc\\github2\\Test\\src\\main\\java\\com\\github\\ "
-//                + "&& cmd /c dir "
-//                + "&& git add C:\\Users\\liunian-jk\\Desktop\\doc\\github2\\Test\\src\\main\\java\\com\\github\\ "
-//                + "&& git commit -m \"UPDATE BY NOSTALGIA\""
-//                + "&& git push origin main";
-//
-//
-//        System.out.println("切换并打印目录命令:" + switchPwd);
-////        List<String> showPwdResult = ExecuteCommand.execCommand(switchPwd);
-//        List<String> showPwdResult = execCommand(switchPwd);
-//        System.out.println("切换目录:" + showPwdResult);
-//    }
 
     private void updateReadMe(String filePath) throws Exception {
         Files.write(Paths.get(filePath), String.format("\nhello world -- %s", new Date()).getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);

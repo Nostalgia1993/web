@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:mysql://101.34.168.11:3306/github_batch?useUnicode=true&characterEncoding=UTF8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
-    password: zxcZXC123!@#mysql
+    password: qweQWE123!@#nos
   jpa:
     hibernate:
       ddl-auto: update
